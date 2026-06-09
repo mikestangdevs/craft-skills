@@ -100,7 +100,3 @@ Deliberately small at launch. Candidates being considered for a later release:
 
 - **`why-comments`** — keep the comments that capture the non-obvious *why*, delete the ones that just narrate *what*, and add a "why" where load-bearing code has none.
 - **`fit-in`** — match the surrounding code's existing patterns and idioms instead of importing a generic style.
-
-## License
-
-MIT
