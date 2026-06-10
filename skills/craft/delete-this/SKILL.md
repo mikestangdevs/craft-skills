@@ -1,10 +1,6 @@
 ---
 name: delete-this
 description: "Use when a codebase feels heavy, when you suspect dead code, or before adding a feature to an area that's already cluttered. Finds and safely removes code that no longer earns its place — dead branches, unused exports, commented-out blocks, abandoned feature flags, speculative abstractions used once, and TODOs from a previous era. Proves code is unused before deleting and stages deletions so each is independently revertible. Use when the answer to 'why is this here?' is silence."
-license: MIT
-metadata:
-  author: michael-stang
-  version: '1.0'
 ---
 
 # Delete This

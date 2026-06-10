@@ -56,7 +56,7 @@ The five `craft/` skills each own exactly one failure mode and are designed to c
 
 Every `SKILL.md` follows the same shape — keep it consistent:
 
-1. **YAML frontmatter** with `name` (must equal the directory name), a sharp `description`, `license: MIT`, and `metadata` (author, version). The `description` must name **concrete trigger situations** (when to reach for it), not vibes — this is what makes the agent fire it reliably.
+1. **YAML frontmatter** with exactly two keys: `name` (must equal the directory name) and a sharp `description`. The `description` must name **concrete trigger situations** (when to reach for it), not vibes — this is what makes the agent fire it reliably. (No `license`/`metadata` block — licensing lives in the root `LICENSE` file.)
 2. Body sections, in order: `## The failure mode this fixes` → `## When to Use This Skill` (including a bold **Don't use when:** honest negative) → `## Instructions` (numbered phases) → `## Output format` (a fenced block) → `## Anti-Patterns` (a table of anti-pattern → why it defeats the skill) → `## Mental Model` (a one-line blockquote).
 3. One thing per skill. If it does two things, it's two skills.
 4. Model-agnostic, plain instructions, ~2-minute read.
@@ -69,7 +69,7 @@ When adding, renaming, or removing a skill, all of these must hold (a stale one 
 - A skill in a **shipped** bucket (`craft/`, `setup/`) is referenced in **both** `plugin.json`'s `skills` array **and** the top-level `README.md` (table row + working relative link). A skill in a **staging** bucket appears in **neither**.
 - The skill is listed in its **bucket's `README.md`** with a one-line description, name linked to its `SKILL.md`.
 - `setup-craft-skills` mentions the skill in its "before using" list if it consumes `CONTEXT.md`.
-- The release version lives in `plugin.json` (`version`); bump the skill's `metadata.version` too if its behavior changed.
+- The release version lives in `plugin.json` (`version`); skills carry no per-file version.
 - `claude plugin validate .` passes.
 
 ## Conventions

@@ -1,10 +1,6 @@
 ---
 name: seams
 description: "Use when you want to unit-test logic but can't without a database, network, clock, or a pile of mocks — or when a function fetches, computes, branches on policy, and writes all in one breath. Splits the decision (pure logic) from the action (I/O and side effects) along the natural seam, so the logic becomes testable with plain values and no mocks. This is functional-core / imperative-shell at the function level — about testability and purity, not about where files live. The proof is a unit test that needs zero mocks. Use when a small change ripples into unrelated behaviors, or when one function knows too much."
-license: MIT
-metadata:
-  author: michael-stang
-  version: '1.0'
 ---
 
 # Seams

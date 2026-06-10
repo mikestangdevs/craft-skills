@@ -1,10 +1,6 @@
 ---
 name: boyscout
 description: "Use when touching an existing file to make a change, so you leave it slightly cleaner than you found it without derailing into a giant refactor. Identifies small, safe, in-scope improvements adjacent to the change you're already making — a better name, a deleted dead line, an extracted helper, a clarified condition — and keeps them separate from the behavior change so review stays clean. Use on every non-trivial edit to an existing file; the discipline is keeping cleanup small and bounded, not skipping it."
-license: MIT
-metadata:
-  author: michael-stang
-  version: '1.0'
 ---
 
 # Boy Scout

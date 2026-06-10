@@ -1,10 +1,6 @@
 ---
 name: setup-craft-skills
 description: "Run once per repository to get the most out of the other craft skills (explain-back, name-things, delete-this, seams, loud-errors, boyscout). Scaffolds an optional shared CONTEXT.md — domain glossary, language/stack, conventions, and untouchables — that those skills read to match your project's vocabulary and standards. The craft skills work without it; CONTEXT.md just makes their output fit your codebase instead of generic defaults. Use when first installing the craft-skills plugin in a new codebase, or when the project's domain language or conventions have drifted and need re-capturing."
-license: MIT
-metadata:
-  author: michael-stang
-  version: '1.0'
 ---
 
 # Setup Craft Skills

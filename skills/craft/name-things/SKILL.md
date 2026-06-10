@@ -1,10 +1,6 @@
 ---
 name: name-things
 description: "Use when naming or renaming functions, variables, types, files, or modules — or when a code review keeps stumbling over confusing names. Forces names to reveal intent and role, kills generic names (data, handle, process, manager, util), and aligns vocabulary with the domain. Use when reading code feels harder than it should, when two things have nearly the same name, or before extracting a new function or type that needs a name."
-license: MIT
-metadata:
-  author: michael-stang
-  version: '1.0'
 ---
 
 # Name Things
