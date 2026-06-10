@@ -1,16 +1,20 @@
 ---
 name: setup-craft-skills
-description: "Run once per repository to get the most out of the other craft skills (explain-back, name-things, delete-this, seams, loud-errors, boyscout). Scaffolds an optional shared CONTEXT.md — domain glossary, language/stack, conventions, and untouchables — that those skills read to match your project's vocabulary and standards. The craft skills work without it; CONTEXT.md just makes their output fit your codebase instead of generic defaults. Use when first installing the craft-skills plugin in a new codebase, or when the project's domain language or conventions have drifted and need re-capturing."
+description: "Run once per repository to get the most out of the other craft skills (explain-back, name-things, delete-this, seams, loud-errors, boyscout, why-comments, fit-in). Scaffolds an optional shared CONTEXT.md — domain glossary, language/stack, conventions, and untouchables — that those skills read to match your project's vocabulary and standards. The craft skills work without it; CONTEXT.md just makes their output fit your codebase instead of generic defaults. Use when first installing the craft-skills plugin in a new codebase, or when the project's domain language or conventions have drifted and need re-capturing."
 ---
 
 # Setup Craft Skills
+
+## The failure mode this fixes
+
+The craft skills are generic by default — and generic is the failure: `name-things` proposing vocabulary your team doesn't use, `delete-this` not knowing your webhook registry resolves handlers by string, `fit-in` guessing at conventions the team settled years ago. Without shared context, every skill re-detects (or mis-guesses) these per run. This skill captures the project's vocabulary, conventions, and untouchables **once**, in a file all the other skills read.
 
 ## When to Use This Skill
 
 - First time using the craft-skills plugin in a repository
 - The project's domain vocabulary or conventions have changed and `CONTEXT.md` is stale
 
-Run this **once per repo** (recommended, not required) before `explain-back`, `name-things`, `delete-this`, `seams`, `loud-errors`, or `boyscout`. Those skills read the file this creates *if it's present* — so their output matches *your* codebase instead of generic defaults. Skip it and the skills still work; they just fall back to detecting conventions on the fly.
+Run this **once per repo** (recommended, not required) before `explain-back`, `name-things`, `delete-this`, `seams`, `loud-errors`, `boyscout`, `why-comments`, or `fit-in`. Those skills read the file this creates *if it's present* — so their output matches *your* codebase instead of generic defaults. Skip it and the skills still work; they just fall back to detecting conventions on the fly.
 
 ## What it creates
 
@@ -50,10 +54,33 @@ List public entry points, exported package surfaces, plugin/extension points, ro
 
 Write the file, show it to the human, and confirm it's accurate before finishing. A wrong glossary is worse than none.
 
+### 6. Make it discoverable
+
+If the repo has a `CLAUDE.md` (or an equivalent agent-instructions file), add a one-line pointer to `CONTEXT.md` — "Domain glossary, conventions, and untouchables live in `CONTEXT.md`." — so agents that never fire a craft skill still find it. Without the pointer, the file is skill-private state; with it, it's shared project memory.
+
+## Output format
+
+```
+DETECTED (from the repo, not asked)
+  stack: <languages> | tests: <framework, location> | build: <command>
+
+GLOSSARY CANDIDATES (for human confirmation)
+  - <Term> — <one-line meaning> — avoid: <banned near-synonyms>
+
+UNTOUCHABLES
+  - <surface> @ <file> — why it must never be auto-removed
+
+WRITTEN
+  CONTEXT.md @ repo root — confirmed by human: <yes / pending>
+  CLAUDE.md pointer: <added / no CLAUDE.md present>
+```
+
 ## CONTEXT.md template
 
 ```markdown
 # Project Context
+
+> If this file contradicts the code, trust the code — then re-run `/setup-craft-skills` to re-capture.
 
 ## Stack
 - Language(s):
@@ -92,6 +119,8 @@ A filled-in `CONTEXT.md` for a payments service — note how the glossary feeds 
 ```markdown
 # Project Context
 
+> If this file contradicts the code, trust the code — then re-run `/setup-craft-skills` to re-capture.
+
 ## Stack
 - Language(s): TypeScript (Node)
 - Test framework: Vitest
@@ -129,6 +158,15 @@ _Avoid_: chargeback (a chargeback is bank-initiated and is a different entity)
 - Dynamic access points: webhook handlers resolved by `event.type` string in `webhooks/registry.ts`
 - Plugin/route surfaces: Express routes registered in `routes/*.ts`
 ```
+
+## Anti-Patterns
+
+| Anti-Pattern | Why it defeats the skill |
+|---|---|
+| Interrogating instead of detecting | Twenty questions and the human closes the session. Read the repo; ask only what the code can't answer. |
+| Framework nouns in the glossary | `Controller`, `Middleware`, `Repository` aren't your domain — they're everyone's. The glossary is for the product's entities. |
+| Writing the file without confirmation | A wrong glossary is worse than none: every skill that reads it propagates the error. |
+| Treating CONTEXT.md as permanent | Vocabulary and conventions drift. A stale glossary re-introduces the two-vocabularies problem it exists to prevent. |
 
 ## Mental Model
 

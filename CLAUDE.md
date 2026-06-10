@@ -40,13 +40,15 @@ Conventions:
 
 ### How the skills relate (the big picture)
 
-The five `craft/` skills each own exactly one failure mode and are designed to compose:
+The seven `craft/` skills each own exactly one failure mode and are designed to compose:
 
-- **`explain-back`** — build & confirm a mental model before trusting code (the everyday hero).
+- **`explain-back`** — build & confirm a mental model before trusting code (the everyday hero). Routes `UNJUSTIFIED` dead chunks to `delete-this` and naming stumbles to `name-things`.
 - **`delete-this`** — prove code is dead, then remove it in revertible stages (the surprising front door).
 - **`name-things`** — kill generic names; align to the domain vocabulary.
 - **`seams`** — split pure decision from effectful action so logic is testable with no mocks (functional-core / imperative-shell at the function level — deliberately distinct from architectural layering).
 - **`loud-errors`** — make swallowed/vague failures loud and specific.
+- **`why-comments`** — delete comments that narrate *what*, keep/sharpen/add the non-obvious *why*. Hands commented-out code to `delete-this`; unclear-code-propped-by-comment to `name-things`.
+- **`fit-in`** — read the neighborhood first; match local idiom and reuse existing solutions instead of importing a generic style. Convention never outranks correctness: harmful local patterns are flagged (`loud-errors`/`name-things` win), not replicated. Style crusades route to `boyscout` (small) or a separate proposal (big).
 
 `boyscout` is a meta-skill: small, opportunistic, in-scope cleanup riding along with another change, and it may invoke the others *at small scale*. The boundary with `delete-this` matters and is cross-referenced in both files: `boyscout` = adjacent cleanup while editing; `delete-this` = a deliberate repo-wide sweep.
 

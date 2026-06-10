@@ -4,7 +4,7 @@
 
 These are the skills I reach for to get *craft* out of an agent, not just more code. Most coding skills help you produce code faster. These help you produce code that the next person — including future-you, and the next agent — can actually understand, change, and trust.
 
-AI can write working code all day. For me the bottleneck moved a while ago: the expensive problems now are code nobody understands, names that hide intent, files that only grow, failures that vanish silently, and "quick changes" that become rewrites. These six skills are my answer to exactly those — the craft layer, not the typing layer. Each fixes one specific failure mode, does one thing, works with any model, and is small enough to read in two minutes. Hack on them, make them your own.
+AI can write working code all day. For me the bottleneck moved a while ago: the expensive problems now are code nobody understands, names that hide intent, files that only grow, failures that vanish silently, and "quick changes" that become rewrites. These eight skills are my answer to exactly those — the craft layer, not the typing layer. Each fixes one specific failure mode, does one thing, works with any model, and is small enough to read in two minutes. Hack on them, make them your own.
 
 ## Quickstart
 
@@ -65,6 +65,18 @@ The empty `catch {}`, the bare `except: pass`, the `throw new Error("something w
 
 [`loud-errors`](skills/craft/loud-errors/SKILL.md) hunts down swallowed and vague failures and makes them loud and specific — what operation failed, with which inputs, and what to do next — while keeping the rare *intentional* swallow explicit instead of accidental.
 
+### Comments that narrate instead of explain
+
+Agents pad code with `// increment the counter` — comments that restate what the code already says, rot on the next edit, and train every reader to skip comments entirely. Meanwhile the one thing a comment can do that code can't — record *why* the retry is 3 and not 5, why the obvious approach was tried and reverted — goes unwritten. Six months later someone "simplifies" the workaround and reintroduces the bug it guarded.
+
+[`why-comments`](skills/craft/why-comments/SKILL.md) inverts the ratio: deletes the *whats*, keeps and sharpens the *whys* (the constraint, the evidence, what breaks if you "fix" it), and adds a why where surprising code has none.
+
+### Code that's correct but doesn't belong
+
+The repo uses result types; the agent throws. Tests live next to the source; the agent creates `__tests__/`. The codebase already has a retry helper; the agent writes a second one. None of it is a bug, and all of it is cost — a codebase edited by agents long enough becomes a patchwork of five house styles with no house.
+
+[`fit-in`](skills/craft/fit-in/SKILL.md) makes reading the neighborhood a mandatory first step: match the local idiom, reuse the local solutions, and treat "improving" the style as a separate, deliberate act. **Convention never outranks correctness** — harmful local patterns get flagged, not replicated.
+
 ### The "quick change" that became a rewrite
 
 Two opposite failures rot a codebase: never cleaning up, so entropy compounds until the file is a no-go zone — or a 10-line change ballooning into a 400-line refactor that's impossible to review and ships three new bugs. Agents swing wildly between both.
@@ -86,6 +98,8 @@ These are the fundamentals I keep reaching for, condensed into skills an agent c
 | **[name-things](skills/craft/name-things/SKILL.md)** | Kills generic names (`data`, `handle`, `manager`, `util`) and makes every name reveal intent and match the domain. |
 | **[seams](skills/craft/seams/SKILL.md)** | Splits the decision (pure, testable logic) from the action (I/O and side effects) so "I can't test this without mocks" stops being true. |
 | **[loud-errors](skills/craft/loud-errors/SKILL.md)** | Finds swallowed and vague errors and makes failures loud and specific — what failed, with which inputs, and what to do next. |
+| **[why-comments](skills/craft/why-comments/SKILL.md)** | Deletes comments that narrate *what* the code already says, keeps and sharpens the ones that capture a non-obvious *why*, and adds a why where surprising code has none. |
+| **[fit-in](skills/craft/fit-in/SKILL.md)** | Reads the surrounding code first and matches its idioms — error style, test layout, naming, existing helpers — instead of importing a generic house style. |
 | **[boyscout](skills/craft/boyscout/SKILL.md)** | Leave the file a little cleaner than you found it — small, safe, in-scope cleanup that never balloons into a rewrite. |
 
 ### Setup
@@ -96,7 +110,8 @@ These are the fundamentals I keep reaching for, condensed into skills an agent c
 
 ## Roadmap
 
-Deliberately small at launch. Candidates being considered for a later release:
+Deliberately small. Candidates being considered for a later release:
 
-- **`why-comments`** — keep the comments that capture the non-obvious *why*, delete the ones that just narrate *what*, and add a "why" where load-bearing code has none.
-- **`fit-in`** — match the surrounding code's existing patterns and idioms instead of importing a generic style.
+- **`honest-tests`** — kill tautological tests: tests that mock every collaborator and assert the mocks were called mirror the implementation and pass forever, proving nothing. Assert observable behavior; a test that can't fail when the logic breaks gets deleted. Completes the arc with `seams` — seams makes logic testable, honest-tests makes the tests mean something.
+- **`second-caller`** — YAGNI at write-time: no abstraction until the second concrete caller exists. `delete-this` removes speculative generality after the fact; this prevents it — the config option nobody passes, the interface with one implementation, the "pluggable" factory for a hypothetical future.
+- **Eval scenarios** — small fixtures per skill (a snippet with a swallowed error, a function with no seam) to regression-test that wording changes don't break skill triggering or output shape.

@@ -1,7 +1,7 @@
 {
   "name": "craft-skills",
   "description": "Skills for code you'll have to live with. Craft-focused skills that make code understandable, named well, lean, loud about failure, and testable — without turning every edit into a rewrite.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Michael Stang"
   },
@@ -11,6 +11,8 @@
     "./skills/craft/delete-this",
     "./skills/craft/seams",
     "./skills/craft/loud-errors",
+    "./skills/craft/why-comments",
+    "./skills/craft/fit-in",
     "./skills/craft/boyscout",
     "./skills/setup/setup-craft-skills"
   ]
