@@ -19,14 +19,14 @@ This skill makes names carry their weight: a good name tells you what something 
 - Two identifiers are confusingly similar (`user` vs `userData` vs `userInfo`)
 - You're about to write a comment to explain a name — the name should do that job
 
-**Don't use when:** the name is already domain-standard and clear (`id`, `i` in a tight loop, well-known abbreviations like `url`, `db`). Don't rename for the sake of renaming.
+**Don't use when:** the name is already domain-standard and clear (`id`, `i` in a tight loop, well-known abbreviations like `url`, `db`). Framework-idiomatic names in their conventional position (`req`/`res` in an Express handler, `ctx`, `self`/`cls`) are also exempt — fighting the ecosystem costs more than it clarifies. Don't rename for the sake of renaming.
 
 ## Instructions
 
 ### 1. Ask what role the thing plays
 
 Names encode role. Before naming, classify:
-- **Boolean** → reads as a question/state: `isReady`, `hasAccess`, `shouldRetry` (not `flag`, `status`, `check`)
+- **Boolean** → reads as a question/state: `isReady`, `hasAccess`, `shouldRetry` (not `flag`, `status`, `check`). Phrase it positively — `isEnabled`, not `isNotDisabled`; negatives double up at the call site (`!isNotReady`)
 - **Function** → verb phrase naming the effect: `chargeCard`, `parseWebhook`, `evictStaleSessions` (not `handle`, `process`, `doWork`)
 - **Collection** → plural noun: `pendingInvoices` (not `list`, `arr`, `data`)
 - **Transformation** → name the *output*, not the act: `cents` not `convert`, `normalizedEmail` not `fixEmail`
@@ -73,7 +73,7 @@ When proposing renames, present a table so the human can scan and approve:
 
 ## Anti-Patterns
 
-| Anti-Pattern | Problem |
+| Anti-Pattern | Why it defeats the skill |
 |---|---|
 | Type-in-the-name (`userObject`, `nameString`, `itemsArray`) | The type system already knows. The name should add meaning, not repeat it. |
 | Comment-as-crutch (`// the list of active users` above `data`) | Move the meaning into the name; delete the comment. |

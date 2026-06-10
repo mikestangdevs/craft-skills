@@ -17,7 +17,7 @@ The Boy Scout Rule threads the needle: leave the code a little better than you f
 - You notice something adjacent that's mildly wrong (a vague name, a dead line, a muddy condition)
 - A reviewer asked "while you're in there, can you also..."
 
-**Don't use when:** the file is brand new (nothing to clean), or the cleanup is large enough to deserve its own PR. If cleanup would exceed roughly the size of your actual change, stop and file it as separate work. For a *deliberate* dead-code sweep across a module, use `delete-this` instead — this skill is only for small, opportunistic, in-scope cleanup riding along with a change you're already making.
+**Don't use when:** the file is brand new (nothing to clean), or the cleanup is large enough to deserve its own PR. If cleanup would exceed roughly a third of the size of your actual change, stop and file it as separate work — the cleanup is the tip, not the meal. For a *deliberate* dead-code sweep across a module, use `delete-this` instead — this skill is only for small, opportunistic, in-scope cleanup riding along with a change you're already making.
 
 ## Instructions
 
@@ -67,7 +67,7 @@ DEFERRED (too big for now — filed, not done)
 
 ## Anti-Patterns
 
-| Anti-Pattern | Problem |
+| Anti-Pattern | Why it defeats the skill |
 |---|---|
 | The "while I'm here" rewrite | A 10-line change becomes 400 lines and three bugs. Bound the scope. |
 | Cleanup mixed into the behavior commit | Reviewer can't tell what actually changed; bisect points at the wrong line. |

@@ -38,6 +38,37 @@ Extract the DECISION into a function that:
 - Returns a **description of what should happen**, not the act of doing it (e.g. return `{ action: "refund", cents: 1200 }`, don't call Stripe)
 - Has zero side effects → testable with plain values, no mocks
 
+```ts
+// BEFORE — decision fused to action: untestable without Stripe and a db
+async function processRefund(orderId: string) {
+  const order = await db.orders.get(orderId);
+  if (order.settledAt && daysSince(order.settledAt) <= 30 && !order.refundedAt) {
+    await stripe.refunds.create({ charge: order.chargeId, amount: order.amountCents });
+    await db.orders.markRefunded(orderId);
+  }
+}
+
+// AFTER — pure decision returns a description; note the clock enters as an argument
+function decideRefund(order: Order, today: Date): RefundDecision {
+  if (!order.settledAt) return { action: "reject", reason: "not settled" };
+  if (order.refundedAt) return { action: "reject", reason: "already refunded" };
+  if (daysBetween(order.settledAt, today) > 30) return { action: "reject", reason: "window expired" };
+  return { action: "refund", chargeId: order.chargeId, cents: order.amountCents };
+}
+
+// the action is now thin plumbing: gather → decide → carry out
+async function processRefund(orderId: string) {
+  const order = await db.orders.get(orderId);
+  const decision = decideRefund(order, new Date());
+  if (decision.action === "refund") {
+    await stripe.refunds.create({ charge: decision.chargeId, amount: decision.cents });
+    await db.orders.markRefunded(orderId);
+  }
+}
+```
+
+If the decision needs data you can't gather upfront (a per-item loop over a paginated or streaming source), split per element instead: a pure decision for *one* item, and a thin loop that fetches each item, calls the decision, and carries out the result.
+
 ### 3. Leave the action thin and dumb
 
 The ACTION side becomes a thin executor: it gathers inputs, calls the pure decision, and carries out the result. It contains *no business logic* — just plumbing. Ideally it's so simple it barely needs testing.
@@ -70,7 +101,7 @@ SEAM TEST (proof)
 
 ## Anti-Patterns
 
-| Anti-Pattern | Problem |
+| Anti-Pattern | Why it defeats the skill |
 |---|---|
 | Decision returns by doing (calls the API instead of describing the call) | No seam — you still can't test the logic without the dependency. |
 | Mock-heavy tests | If a "unit" test needs five mocks, you tested the plumbing, not the decision. The seam is in the wrong place. |

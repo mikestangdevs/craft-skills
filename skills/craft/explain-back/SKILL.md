@@ -38,7 +38,9 @@ Walk the code in small chunks. For each chunk, say in plain language:
 - **Why** it's there (the intent it serves)
 - **What breaks** if it's wrong or removed
 
-Use no jargon the human hasn't used first. If you cannot explain *why* a chunk exists — only *what* it does — flag it explicitly as `UNJUSTIFIED`. Unjustified code is the #1 source of silent bugs and is the highest-value thing this skill finds.
+Use no jargon the human hasn't used first. If you cannot explain *why* a chunk exists — only *what* it does — flag it explicitly as `UNJUSTIFIED`. Unjustified code is the #1 source of silent bugs and is the highest-value thing this skill finds. If an `UNJUSTIFIED` chunk turns out to have no callers or no observable effect, hand it to `delete-this`; if the explanation keeps stumbling over what something is *called*, route the fix to `name-things`.
+
+**Scale depth to risk, not line count.** On a large diff, chunk at the function level and drop to line-level only where the assumptions concentrate — state changes, boundaries, error paths, anything touching money or auth. An explanation nobody reads defeats the skill exactly the way "looks good" does.
 
 ### 3. Name the assumptions
 

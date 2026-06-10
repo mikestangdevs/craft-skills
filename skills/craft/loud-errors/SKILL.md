@@ -54,6 +54,8 @@ A good error answers three questions without a debugger:
 
 Preserve the original cause every time you wrap. A new error that drops the stack trace is just a different way of swallowing.
 
+**Report once, at the boundary that owns the response.** Intermediate layers add context by wrapping with `cause` — they don't log. A failure that appears five times in the logs as it bubbles up is noise the on-call engineer has to dedupe by hand; loud means *visible once with full context*, not echoed at every layer.
+
 ### 4. Make any *intentional* swallow explicit
 
 If a failure really should be ignored, it must say so on purpose — so the next reader (and the next agent) knows it's a decision, not an accident:
@@ -63,7 +65,7 @@ If a failure really should be ignored, it must say so on purpose — so the next
 
 ### 5. Fail fast at the boundary
 
-Validate and reject bad inputs at the edge (where the request, file, or message enters) rather than letting a half-valid value travel three layers in and explode somewhere unrelated. The closer the error is to the cause, the cheaper it is to diagnose.
+Validate and reject bad inputs at the edge (where the request, file, or message enters) — the closer the error surfaces to its cause, the cheaper it is to diagnose.
 
 ### 6. Verify the failure is now visible
 
@@ -97,6 +99,7 @@ PROOF
 | Wrapping that drops the cause | A new error with no `cause`/original stack is just swallowing with extra steps. |
 | Logging secrets/PII into the message | An error you can't paste into a ticket is a new problem, not a fix. Identifiers, never secrets. |
 | Making an intentional fallback crash | Best-effort work (cache, telemetry) must *not* fail the request. Make the swallow explicit, don't remove it. |
+| Catch-log-rethrow at every layer | The same failure shows up five times in the logs. Wrap with `cause` as it bubbles; log once, at the boundary. |
 
 ## Mental Model
 

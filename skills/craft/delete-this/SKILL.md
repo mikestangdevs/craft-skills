@@ -32,6 +32,7 @@ Scan the target scope and list deletion candidates by category:
 - **Single-use abstractions** — interfaces/factories/generics with exactly one implementation or caller
 - **Stale markers** — TODOs/FIXMEs older than the problem they describe
 - **Orphaned config** — flags, env vars, settings nothing reads
+- **Orphaned tests & deps** — tests that only exercise code being deleted; package dependencies nothing imports once the sweep lands
 
 ### 2. Prove it's dead (do not skip)
 
@@ -39,6 +40,8 @@ For each candidate, establish *unused* with evidence, not vibes:
 - Grep the whole repo (and sibling repos / consumers if it's an export) for references
 - Check dynamic access: reflection, string-keyed lookups, DI containers, route tables, serialized config
 - Check the build: is it exported from a package's public entry point?
+- For dead *branches*, grep isn't proof of runtime death — a reference can exist and never execute. Use runtime evidence where it exists: coverage reports, log/telemetry hits, feature-flag analytics ("evaluated 0 times in 90 days" is proof; "the flag appears in code" is not)
+- Check the fence before removing it: if you can't say why the code was added, read `git log`/blame for the commit that introduced it. "Looks pointless" plus a commit message saying "fixes race on concurrent checkout" changes the verdict
 - Cross-check the **Untouchables** in `CONTEXT.md` (if present) — public exports, plugin/route surfaces, and dynamic-access points listed there are never deletion candidates, regardless of grep results.
 - If you cannot prove it's unused, it is **not** a deletion candidate — move it to a "verify with a human" list instead.
 
@@ -74,7 +77,7 @@ PLAN
 
 ## Anti-Patterns
 
-| Anti-Pattern | Problem |
+| Anti-Pattern | Why it defeats the skill |
 |---|---|
 | `git stash`-ing into a comment | Version control already remembers. Commented code rots and lies. |
 | Deleting on a hunch | If you can't prove it's unused, you're gambling with prod. Prove or punt. |
