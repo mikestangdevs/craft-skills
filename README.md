@@ -4,7 +4,9 @@
 
 These are the skills I reach for to get *craft* out of an agent, not just more code. Most coding skills help you produce code faster. These help you produce code that the next person — including future-you, and the next agent — can actually understand, change, and trust.
 
-AI can write working code all day. For me the bottleneck moved a while ago: the expensive problems now are code nobody understands, names that hide intent, files that only grow, failures that vanish silently, and "quick changes" that become rewrites. These eight skills are my answer to exactly those — the craft layer, not the typing layer. Each fixes one specific failure mode, does one thing, works with any model, and is small enough to read in two minutes. Hack on them, make them your own.
+AI can write working code all day. For me the bottleneck moved a while ago: the expensive problems now are code nobody understands, names that hide intent, files that only grow, failures that vanish silently, and "quick changes" that become rewrites. And right behind those, a second family: tests written to pass, invented constants, point fixes on systemic bugs, and "should work now" shipped as if it were evidence.
+
+So there are two collections here. **Craft** is the legibility layer — it makes code the next person can understand, change, and trust. **Rigor** is the proof layer — it makes the *claims about* that code believable: every "done" backed by evidence, every number backed by a source, every fix checked against its siblings. The rigor skills weren't designed on a whiteboard; they were mined from hundreds of hours of my own agent sessions on a physics simulation product, where a fudged constant isn't a style problem — it's a wrong answer someone acts on. Each skill in both collections fixes one specific failure mode, does one thing, works with any model, and is small enough to read in two minutes. Hack on them, make them your own.
 
 ## Quickstart
 
@@ -31,7 +33,7 @@ AI can write working code all day. For me the bottleneck moved a while ago: the 
 
 3. That's it. The skills trigger when they're relevant, or you can invoke any of them by name.
 
-## Why these skills exist
+## Why the craft skills exist
 
 I built these to fix the failure modes I kept hitting with Claude Code and other agents — the ones that don't show up as a red test, but as a codebase that slowly becomes harder to live in.
 
@@ -83,6 +85,58 @@ Two opposite failures rot a codebase: never cleaning up, so entropy compounds un
 
 [`boyscout`](skills/craft/boyscout/SKILL.md) threads the needle: leave the file a little cleaner than you found it, but keep the cleanup small, safe, in-scope, and separate from the behavior change. **The discipline is the smallness.**
 
+## Why the rigor skills exist
+
+Craft is about the code; rigor is about the claims. An agent doesn't just produce diffs — it produces assertions: "tests pass," "this value is right," "fixed," "ready." I kept getting burned not by bad code but by **confident claims that turned out to be vibes**. These eight are the counters, one per failure mode.
+
+### Tests that were written to pass
+
+The agent built the code, wants the code to work, and writes tests that confirm it does — happy paths, assertions copied from the implementation's own output. The suite goes green and verifies nothing. A test written to pass is a green light bolted over a blind corner.
+
+[`test-like-you-mean-it`](skills/rigor/test-like-you-mean-it/SKILL.md) makes the agent switch sides after every build: attack the thing with invariants, edge regimes, and independent cross-checks, where *finding a defect is the expected outcome*. **Not smoke tests. Not safely. Test it for real.**
+
+### "My tests pass" while the other 4,000 rot
+
+The agent runs the three tests next to its change and moves on. Four tasks later the full suite runs and 23 tests are red — and nobody knows which change broke them. Or the suite *is* run, fails, and the report waves it off as "probably pre-existing."
+
+[`bank-the-suite`](skills/rigor/bank-the-suite/SKILL.md) runs the *whole* suite after every unit of work — backgrounded and parallelized, never skipped — and banks a verified green: honest counts against a baseline, every red accounted for by name. **New red has exactly one suspect.**
+
+### The number that came from nowhere
+
+`efficiency = 0.92`, `timeout = 30`, `1.2x` — invented because they look plausible, then trusted by everyone downstream who can't see they were guesses. The malignant variant: a failing test "fixed" by adjusting the constant until it passes.
+
+[`prove-every-number`](skills/rigor/prove-every-number/SKILL.md) enforces provenance: every number derived or cited — real data first, explicitly-labeled assumption as the fallback, invention never. **The test result is never evidence for a value.**
+
+### Output that's obviously wrong, accepted because it rendered
+
+A line at 1858% of its rated capacity. A formula panel of zeros. A metric that moved 40x between identical runs. The code ran, so the agent celebrates — or worse, clamps and smooths the display until the nonsense looks plausible.
+
+[`smell-the-numbers`](skills/rigor/smell-the-numbers/SKILL.md) reads output like a domain expert: implausible values are guilty until root-caused, the trace goes all the way down, and the fix lands at the source — never in the display. **"It runs" is not "it's right."**
+
+### The point fix on a population bug
+
+The bug gets fixed in scenario 12. The report says "fixed." Scenarios 1–11 and 13–20 — same copy-paste lineage, same defect — keep lying, and you rediscover them one expensive debugging session at a time.
+
+[`everywhere-else`](skills/rigor/everywhere-else/SKILL.md) asks the question agents never ask themselves: *did you do that anywhere else?* Enumerate the sibling population by search (not memory), audit every member, fix the origin — and report the clean ones too. **A defect found once is a sample, not the population.**
+
+### The bug that was documented instead of fixed
+
+An audit finds six real defects and produces a beautiful list. The list gets filed; the defects stay. Three weeks later one detonates — and the worst part is that the system *knew*.
+
+[`fix-it-now`](skills/rigor/fix-it-now/SKILL.md) treats discovery as the cheapest fix you'll ever be offered: confirmed bugs die in the current pass, deferrals are explicit negotiations (not buried TODOs), and half-kept features get finished or removed. **A documented bug is a bug with better PR.**
+
+### "Should work now"
+
+The most expensive sentence in agent-assisted engineering. You ship on it, and production tells you what "should" was hiding. Pushed with "are you sure?", the agent escalates adjectives instead of evidence.
+
+[`readiness-gate`](skills/rigor/readiness-gate/SKILL.md) replaces the mood with a structured claim: verified vs. not verified, the spec walked line by line (not from memory), certainty calibrated to proof, and an explicit go/no-go that's allowed to say no. **Answer "are you sure?" with evidence, not enthusiasm.**
+
+### The session that forgot everything
+
+Long projects outlive context windows — compaction, restarts, and tomorrow all guarantee it. The next session re-derives the plan, redoes finished work, and re-violates the rule you stated forcefully forty turns ago.
+
+[`checkpoint-handoff`](skills/rigor/checkpoint-handoff/SKILL.md) writes the resume state to durable files before every boundary: what's done (with evidence), numbered remaining tasks, standing constraints verbatim, and the files to re-read first. The test: **a cold session could pick up the next task without asking a single question.**
+
 ---
 
 These are the fundamentals I keep reaching for, condensed into skills an agent can actually follow. Run `/setup-craft-skills` once so they speak your codebase's language, then make them your own.
@@ -102,6 +156,21 @@ These are the fundamentals I keep reaching for, condensed into skills an agent c
 | **[fit-in](skills/craft/fit-in/SKILL.md)** | Reads the surrounding code first and matches its idioms — error style, test layout, naming, existing helpers — instead of importing a generic house style. |
 | **[boyscout](skills/craft/boyscout/SKILL.md)** | Leave the file a little cleaner than you found it — small, safe, in-scope cleanup that never balloons into a rewrite. |
 
+### Rigor
+
+Proof over vibes — craft makes code *livable*, rigor makes claims *believable*.
+
+| Skill | What it does |
+|---|---|
+| **[test-like-you-mean-it](skills/rigor/test-like-you-mean-it/SKILL.md)** | After any build, switch sides and try to break it — invariants, edge regimes, cross-checks. Not smoke tests, not tests written to pass; findings are the expected outcome. |
+| **[bank-the-suite](skills/rigor/bank-the-suite/SKILL.md)** | Run the *full* suite after every unit of work (background it, parallelize it, never skip it) and bank a verified green — honest counts, pre-existing failures carved out by name. |
+| **[prove-every-number](skills/rigor/prove-every-number/SKILL.md)** | Every constant is derived or cited — never invented, never tuned to make a test pass. Real data is the truth; an assumption is the explicitly-labeled backup. |
+| **[smell-the-numbers](skills/rigor/smell-the-numbers/SKILL.md)** | Read the output like a domain expert: implausible values are guilty until root-caused. Fix the source, never the display. |
+| **[everywhere-else](skills/rigor/everywhere-else/SKILL.md)** | "Did you do that anywhere else?" After any fix, enumerate the full population of sibling sites and sweep them — reporting the clean ones too. |
+| **[fix-it-now](skills/rigor/fix-it-now/SKILL.md)** | A found bug gets fixed in the current pass, not documented and deferred. Deferrals are explicit negotiations; half-kept features get finished or removed. |
+| **[readiness-gate](skills/rigor/readiness-gate/SKILL.md)** | Replaces "should work now" with an evidence-backed go/no-go: verified vs. not verified, contract walked line by line, certainty calibrated to proof. |
+| **[checkpoint-handoff](skills/rigor/checkpoint-handoff/SKILL.md)** | Before any context boundary, write the resume state to durable files — numbered remaining tasks, standing constraints verbatim, files to re-read — so a cold session continues without asking. |
+
 ### Setup
 
 | Skill | What it does |
@@ -112,6 +181,8 @@ These are the fundamentals I keep reaching for, condensed into skills an agent c
 
 Deliberately small. Candidates being considered for a later release:
 
-- **`honest-tests`** — kill tautological tests: tests that mock every collaborator and assert the mocks were called mirror the implementation and pass forever, proving nothing. Assert observable behavior; a test that can't fail when the logic breaks gets deleted. Completes the arc with `seams` — seams makes logic testable, honest-tests makes the tests mean something.
+- **`honest-tests`** — kill tautological tests: tests that mock every collaborator and assert the mocks were called mirror the implementation and pass forever, proving nothing. Assert observable behavior; a test that can't fail when the logic breaks gets deleted. Sits between `seams` and `test-like-you-mean-it`: seams makes logic testable, honest-tests makes existing tests mean something at write/review time, test-like-you-mean-it is the post-build adversarial wave.
 - **`second-caller`** — YAGNI at write-time: no abstraction until the second concrete caller exists. `delete-this` removes speculative generality after the fact; this prevents it — the config option nobody passes, the interface with one implementation, the "pluggable" factory for a hypothetical future.
+- **`research-handoff`** — when a fact can't be derived from the repo or cited from memory, don't guess: draft a self-contained research prompt (context, exact questions, required citation quality) for an external research agent, then *judge the returns against the codebase* before integrating them. Pairs with `prove-every-number` — it's where the citations come from.
+- **`engineer-pass`** — review the deliverable as a named, demanding persona (the SCADA engineer, the technical COO, the on-call dev) and reject what they'd reject: filler narration, charts with no formula, reports that don't walk the evidence. Output isn't done when it's generated; it's done when the persona would sign it.
 - **Eval scenarios** — small fixtures per skill (a snippet with a swallowed error, a function with no seam) to regression-test that wording changes don't break skill triggering or output shape.

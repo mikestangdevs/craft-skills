@@ -4,13 +4,13 @@
     "name": "Michael Stang"
   },
   "metadata": {
-    "description": "Skills for code you'll have to live with — legibility and restraint, not the typing layer."
+    "description": "Skills for code you'll have to live with \u2014 craft (legibility and restraint) and rigor (proof over vibes), not the typing layer."
   },
   "plugins": [
     {
       "name": "craft-skills",
       "source": "./",
-      "description": "Skills for code you'll have to live with — legibility and restraint, not the typing layer."
+      "description": "Skills for code you'll have to live with \u2014 craft (legibility and restraint) and rigor (proof over vibes), not the typing layer."
     }
   ]
 }
