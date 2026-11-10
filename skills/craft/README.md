@@ -11,4 +11,6 @@ The craft skills — legibility and restraint for code you'll have to live with.
 | [`loud-errors`](loud-errors/SKILL.md) | Finds swallowed and vague errors and makes failures loud and specific — what failed, with which inputs, and what to do next. |
 | [`why-comments`](why-comments/SKILL.md) | Deletes comments that narrate *what* the code already says, keeps and sharpens the ones that capture a non-obvious *why*, and adds a why where surprising code has none. |
 | [`fit-in`](fit-in/SKILL.md) | Reads the surrounding code first and matches its idioms — error style, test layout, naming, existing helpers — instead of importing a generic house style. |
+| [`subtract-first`](subtract-first/SKILL.md) | When work is rejected as too much or "not it," remove one thing and re-show before adding anything — one change per look, with a way back to the last accepted state. |
+| [`shared-tree`](shared-tree/SKILL.md) | In a working tree that holds someone else's uncommitted changes: stage by explicit path, no tree-wide resets or stashes, copy a file aside before rewriting it. |
 | [`boyscout`](boyscout/SKILL.md) | Leave the file a little cleaner than you found it — small, safe, in-scope cleanup that never balloons into a rewrite. |

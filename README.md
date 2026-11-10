@@ -13,9 +13,10 @@ So there are two collections here. **Craft** is the legibility layer — it make
 1. **Install** — via the Claude Code plugin marketplace:
 
    ```bash
-   /plugin marketplace add mikestangdevs/craft-skills
-   /plugin install craft-skills
+   /plugin install craft-skills --marketplace mikestangdevs/craft-skills
    ```
+
+   On older Claude Code versions, run `/plugin marketplace add mikestangdevs/craft-skills` and then `/plugin install craft-skills`.
 
    …or with the skills CLI (works across agents, not just Claude Code):
 
@@ -79,6 +80,18 @@ The repo uses result types; the agent throws. Tests live next to the source; the
 
 [`fit-in`](skills/craft/fit-in/SKILL.md) makes reading the neighborhood a mandatory first step: match the local idiom, reuse the local solutions, and treat "improving" the style as a separate, deliberate act. **Convention never outranks correctness** — harmful local patterns get flagged, not replicated.
 
+### "It's not working" answered with more
+
+I say a dashboard is too busy and get back the same dashboard plus a panel explaining it. Every addition competes with what's already there, so each round lands worse — and when four revisions were stacked before I looked, the only clean exit is reverting all of them.
+
+[`subtract-first`](skills/craft/subtract-first/SKILL.md) makes removal the first move: take one thing out, re-show, one change per look, and keep a way back to the last state that was accepted. **A rejection is rarely a request for more.**
+
+### The commit that ate someone else's work
+
+Several agent sessions and I share one checkout. One `git add -A` commits another session's half-finished file; one `git stash` or a careless file rewrite erases it. Uncommitted work lives in exactly one place, so that loss is permanent.
+
+[`shared-tree`](skills/craft/shared-tree/SKILL.md) starts from "what here isn't mine?": stage by explicit path, no tree-wide resets or stashes, copy a file aside before rewriting it, and report what was left untouched.
+
 ### The "quick change" that became a rewrite
 
 Two opposite failures rot a codebase: never cleaning up, so entropy compounds until the file is a no-go zone — or a 10-line change ballooning into a 400-line refactor that's impossible to review and ships three new bugs. Agents swing wildly between both.
@@ -87,7 +100,7 @@ Two opposite failures rot a codebase: never cleaning up, so entropy compounds un
 
 ## Why the rigor skills exist
 
-Craft is about the code; rigor is about the claims. An agent doesn't just produce diffs — it produces assertions: "tests pass," "this value is right," "fixed," "ready." I kept getting burned not by bad code but by **confident claims that turned out to be vibes**. These eight are the counters, one per failure mode.
+Craft is about the code; rigor is about the claims. An agent doesn't just produce diffs — it produces assertions: "tests pass," "this value is right," "fixed," "ready." I kept getting burned not by bad code but by **confident claims that turned out to be vibes**. These nine are the counters, one per failure mode.
 
 ### Tests that were written to pass
 
@@ -105,13 +118,19 @@ The agent runs the three tests next to its change and moves on. Four tasks later
 
 `efficiency = 0.92`, `timeout = 30`, `1.2x` — invented because they look plausible, then trusted by everyone downstream who can't see they were guesses. The malignant variant: a failing test "fixed" by adjusting the constant until it passes.
 
-[`prove-every-number`](skills/rigor/prove-every-number/SKILL.md) enforces provenance: every number derived or cited — real data first, explicitly-labeled assumption as the fallback, invention never. **The test result is never evidence for a value.**
+[`prove-every-number`](skills/rigor/prove-every-number/SKILL.md) enforces provenance: every number derived or cited — real data first, explicitly-labeled assumption as the fallback, invention never. Figures quoted in docs count too: measured before they're written, re-measured when the code moves. **The test result is never evidence for a value.**
 
 ### Output that's obviously wrong, accepted because it rendered
 
 A line at 1858% of its rated capacity. A formula panel of zeros. A metric that moved 40x between identical runs. The code ran, so the agent celebrates — or worse, clamps and smooths the display until the nonsense looks plausible.
 
 [`smell-the-numbers`](skills/rigor/smell-the-numbers/SKILL.md) reads output like a domain expert: implausible values are guilty until root-caused, the trace goes all the way down, and the fix lands at the source — never in the display. **"It runs" is not "it's right."**
+
+### The score that was graded on the answer key
+
+The agent builds a forecast, a classifier, a prompt — then reports how well it does on the examples it was built against, or re-runs the eval after every tweak until it clears. The number is real and means nothing; it measures memory.
+
+[`held-out`](skills/rigor/held-out/SKILL.md) only counts a score on data the thing never saw, against a bar set before scoring, a naive baseline, and a placebo. Verdicts are passed, failed, or indeterminate, and the failures stay in the record. **An evaluation that couldn't have failed tells you nothing.**
 
 ### The point fix on a population bug
 
@@ -154,6 +173,8 @@ These are the fundamentals I keep reaching for, condensed into skills an agent c
 | **[loud-errors](skills/craft/loud-errors/SKILL.md)** | Finds swallowed and vague errors and makes failures loud and specific — what failed, with which inputs, and what to do next. |
 | **[why-comments](skills/craft/why-comments/SKILL.md)** | Deletes comments that narrate *what* the code already says, keeps and sharpens the ones that capture a non-obvious *why*, and adds a why where surprising code has none. |
 | **[fit-in](skills/craft/fit-in/SKILL.md)** | Reads the surrounding code first and matches its idioms — error style, test layout, naming, existing helpers — instead of importing a generic house style. |
+| **[subtract-first](skills/craft/subtract-first/SKILL.md)** | When work is rejected as too much or "not it," remove one thing and re-show before adding anything — one change per look, with a way back to the last accepted state. |
+| **[shared-tree](skills/craft/shared-tree/SKILL.md)** | In a working tree that holds someone else's uncommitted changes: stage by explicit path, no tree-wide resets or stashes, copy a file aside before rewriting it. |
 | **[boyscout](skills/craft/boyscout/SKILL.md)** | Leave the file a little cleaner than you found it — small, safe, in-scope cleanup that never balloons into a rewrite. |
 
 ### Rigor
@@ -166,6 +187,7 @@ Proof over vibes — craft makes code *livable*, rigor makes claims *believable*
 | **[bank-the-suite](skills/rigor/bank-the-suite/SKILL.md)** | Run the *full* suite after every unit of work (background it, parallelize it, never skip it) and bank a verified green — honest counts, pre-existing failures carved out by name. |
 | **[prove-every-number](skills/rigor/prove-every-number/SKILL.md)** | Every constant is derived or cited — never invented, never tuned to make a test pass. Real data is the truth; an assumption is the explicitly-labeled backup. |
 | **[smell-the-numbers](skills/rigor/smell-the-numbers/SKILL.md)** | Read the output like a domain expert: implausible values are guilty until root-caused. Fix the source, never the display. |
+| **[held-out](skills/rigor/held-out/SKILL.md)** | Anything fitted or tuned is scored only on data it never saw, against a bar set beforehand, a naive baseline, and a placebo. Verdicts are passed, failed, or indeterminate. |
 | **[everywhere-else](skills/rigor/everywhere-else/SKILL.md)** | "Did you do that anywhere else?" After any fix, enumerate the full population of sibling sites and sweep them — reporting the clean ones too. |
 | **[fix-it-now](skills/rigor/fix-it-now/SKILL.md)** | A found bug gets fixed in the current pass, not documented and deferred. Deferrals are explicit negotiations; half-kept features get finished or removed. |
 | **[readiness-gate](skills/rigor/readiness-gate/SKILL.md)** | Replaces "should work now" with an evidence-backed go/no-go: verified vs. not verified, contract walked line by line, certainty calibrated to proof. |

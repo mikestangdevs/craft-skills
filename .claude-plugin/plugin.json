@@ -1,7 +1,7 @@
 {
   "name": "craft-skills",
   "description": "Skills for code you'll have to live with. Two collections: craft (code that's understandable, named well, lean, loud about failure, and testable — without turning every edit into a rewrite) and rigor (claims you can believe — adversarial testing, full-suite banking, cited numbers, population sweeps, evidence-backed readiness).",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "Michael Stang"
   },
@@ -13,11 +13,14 @@
     "./skills/craft/loud-errors",
     "./skills/craft/why-comments",
     "./skills/craft/fit-in",
+    "./skills/craft/subtract-first",
+    "./skills/craft/shared-tree",
     "./skills/craft/boyscout",
     "./skills/rigor/test-like-you-mean-it",
     "./skills/rigor/bank-the-suite",
     "./skills/rigor/prove-every-number",
     "./skills/rigor/smell-the-numbers",
+    "./skills/rigor/held-out",
     "./skills/rigor/everywhere-else",
     "./skills/rigor/fix-it-now",
     "./skills/rigor/readiness-gate",

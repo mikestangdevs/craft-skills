@@ -10,6 +10,7 @@ These were mined from real working sessions: hundreds of hours of agent-assisted
 | [`bank-the-suite`](bank-the-suite/SKILL.md) | Run the *full* suite after every unit of work (background it, parallelize it, never skip it) and bank a verified green: honest counts, pre-existing failures carved out by name. |
 | [`prove-every-number`](prove-every-number/SKILL.md) | Every constant is derived or cited — never invented, never tuned to make a test pass. Real data is the truth; an assumption is the explicitly-labeled backup. |
 | [`smell-the-numbers`](smell-the-numbers/SKILL.md) | Read the output like a domain expert: implausible values are guilty until root-caused. Fix the source, never the display. |
+| [`held-out`](held-out/SKILL.md) | Anything fitted or tuned is scored only on data it never saw, against a bar set beforehand, a naive baseline, and a placebo. Verdicts are passed, failed, or indeterminate. |
 | [`everywhere-else`](everywhere-else/SKILL.md) | "Did you do that anywhere else?" After any fix, enumerate the full population of sibling sites and sweep them — reporting the clean ones too. |
 | [`fix-it-now`](fix-it-now/SKILL.md) | A found bug gets fixed in the current pass, not documented and deferred. Deferrals are explicit negotiations; half-kept features get finished or removed. |
 | [`readiness-gate`](readiness-gate/SKILL.md) | Replaces "should work now" with an evidence-backed go/no-go: verified vs. not verified, contract walked line by line, certainty calibrated to proof. |
@@ -17,4 +18,4 @@ These were mined from real working sessions: hundreds of hours of agent-assisted
 
 ## How they chain
 
-A single unit of work, run with the full set: build → **test-like-you-mean-it** (adversarial wave) → **fix-it-now** (findings die in this pass) → **everywhere-else** (sweep the siblings) → **bank-the-suite** (full regression banked green) → **smell-the-numbers** (read the real output) → **readiness-gate** (evidence-backed go/no-go) → **checkpoint-handoff** (state written down) → next unit. **prove-every-number** rides along the whole way.
+A single unit of work, run with the full set: build → **test-like-you-mean-it** (adversarial wave) → **fix-it-now** (findings die in this pass) → **everywhere-else** (sweep the siblings) → **bank-the-suite** (full regression banked green) → **smell-the-numbers** (read the real output) → **readiness-gate** (evidence-backed go/no-go) → **checkpoint-handoff** (state written down) → next unit. **prove-every-number** rides along the whole way, and **held-out** joins it whenever the unit includes something fitted or tuned.
