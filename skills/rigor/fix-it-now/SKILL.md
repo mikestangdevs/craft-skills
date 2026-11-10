@@ -1,6 +1,6 @@
 ---
 name: fix-it-now
-description: "Use the moment a real bug is found during any task — an audit, a review, a test wave, unrelated feature work — and the temptation appears to document it and move on. Defaults to fixing confirmed bugs in the current pass: a found bug is work surfaced, not work deferred. If a fix genuinely can't happen now (out of scope, needs a decision, blocked), the deferral must be explicit and accepted by the user — never a silent TODO buried in a report. Also fires on the half-kept feature: anything kept in the codebase gets finished properly or removed; there is no 'mostly works' tier. Use when an audit produced findings, when a report contains 'known issue', or when a bug was written down instead of fixed."
+description: "Use the moment a real bug is found during an audit, review, test wave, or unrelated work, and the temptation is to document it and move on. Confirmed bugs get fixed in the current pass; a deferral must be explicit and accepted by the user, never a buried TODO. Also covers half-finished features: finish them or remove them."
 ---
 
 # Fix It Now

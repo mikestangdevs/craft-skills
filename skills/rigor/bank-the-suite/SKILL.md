@@ -1,6 +1,6 @@
 ---
 name: bank-the-suite
-description: "Use after completing any unit of work in a repo that has a real test suite — before starting the next task, compacting context, or declaring done. Runs the FULL suite (not just the tests near the change), in the background and parallelized when it's slow, and 'banks' a green state: honest pass/fail counts, pre-existing failures explicitly carved out by name, no moving on while red is unexplained. Use when the agent only ran the two tests it just wrote, when a long suite keeps getting skipped 'for speed', when failures are described vaguely ('a few unrelated tests fail'), or when work is about to stack on top of an unverified base."
+description: "Use after each unit of work in a repo with a real test suite — before the next task, a compaction, or declaring done. Runs the full suite (backgrounded and parallelized when slow) and banks a verified green: honest counts against a baseline, every failure accounted for by name. Use when only nearby tests were run or failures are called 'probably unrelated'."
 ---
 
 # Bank the Suite

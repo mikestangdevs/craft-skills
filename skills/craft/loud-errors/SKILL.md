@@ -1,6 +1,6 @@
 ---
 name: loud-errors
-description: "Use when you spot a swallowed, vague, or context-losing error — an empty catch, a bare `except: pass`, `catch (e) { console.log(e) }` that then continues, `throw new Error(\"something went wrong\")`, an error logged then ignored, or a caught exception that drops its cause. Makes failures loud and specific: each error says what operation failed, with which inputs, and what the caller should do — and stops being silently swallowed. Use when reviewing AI-generated code (agents swallow errors to make the happy path 'work'), when debugging a failure that left no useful trace, or before shipping a path that can fail."
+description: "Use when an error is swallowed, vague, or loses its cause — an empty catch, `except: pass`, log-and-continue, `throw new Error(\"something went wrong\")`. Makes each failure say what operation failed, with which inputs, and what the caller should do. Use when reviewing AI-generated code or debugging a failure that left no trace."
 ---
 
 # Loud Errors

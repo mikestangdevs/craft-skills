@@ -1,6 +1,6 @@
 ---
 name: everywhere-else
-description: "Use immediately after fixing a bug or improving a pattern in one place — before reporting done. Asks the question agents never ask themselves: 'did you do that anywhere else?' Enumerates the full population of sibling sites (other templates, scenarios, endpoints, components, fixtures, configs that share the same pattern), audits every one for the same defect, and applies the fix across the population — or explicitly reports which siblings were checked and found clean. Use when a fix was just applied to one instance of a repeated structure, when a codebase has N parallel implementations of anything, or when a report says 'fixed' but only one file changed."
+description: "Use right after fixing a bug or pattern in one place, before reporting done. Enumerates the sibling sites that share the pattern (templates, endpoints, components, fixtures, configs) by search, audits each for the same defect, fixes the affected ones, and reports which were checked and clean. Use when 'fixed' touched one file among many look-alikes."
 ---
 
 # Everywhere Else

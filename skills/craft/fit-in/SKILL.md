@@ -1,6 +1,6 @@
 ---
 name: fit-in
-description: "Use before writing new code into an existing codebase — a new function, file, test, or feature in a repo that already has its own idioms. Reads the surrounding code first and matches its patterns (error style, test layout, naming casing, import conventions, file structure) instead of importing a generic house style. Use when AI-generated code is correct but 'doesn't look like ours,' when a codebase is becoming a patchwork of dialects, or when starting work in an unfamiliar repo where you'd otherwise default to your own habits."
+description: "Use before writing new code into an existing codebase. Reads the surrounding code first and matches its idioms — error style, test layout, naming, imports, existing helpers — instead of importing a generic house style. Use when AI-generated code is correct but doesn't look like the rest of the repo, or when starting in an unfamiliar repo."
 ---
 
 # Fit In

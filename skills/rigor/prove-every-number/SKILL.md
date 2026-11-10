@@ -1,6 +1,6 @@
 ---
 name: prove-every-number
-description: "Use whenever code contains a numeric constant, threshold, default, rate, capacity, tolerance, or coefficient — especially one the agent just introduced. Enforces the rule: every number is either derived (from real data or first principles, traceably) or cited (to a spec, datasheet, standard, or documented decision) — never invented, never tuned to make a test or demo pass. Real data is the truth; an assumption is the explicitly-labeled backup, used only when the data genuinely doesn't exist. Use when reviewing AI-generated code for magic numbers, when a value was 'picked to look reasonable', when a test was made green by adjusting a constant, or when building anything where the output's credibility depends on its inputs."
+description: "Use when code or docs contain a numeric constant, threshold, default, rate, or tolerance — especially one just introduced. Every number is derived from real data or cited to a source; an assumption is labeled as one. Use when a value was picked to look reasonable, a test went green by adjusting a constant, or a doc quotes a figure nobody re-measured."
 ---
 
 # Prove Every Number
@@ -20,6 +20,7 @@ This skill enforces a simple provenance rule: **every number is derived or cited
 - A failing test was fixed by changing a constant, tolerance, or threshold
 - Output feeds a real decision — money, capacity, safety, compliance, anything a customer reads
 - Real input data exists but the code uses a hardcoded stand-in "for now"
+- A README, doc, or UI string quotes a figure about the system's own behavior
 
 **Don't use when:** the number is structurally meaningless (array index, test fixture ID, placeholder in a sketch you've labeled as a sketch). Don't demand a citation for `MAX_RETRIES = 3` in a script nobody's life depends on — scale provenance rigor to how much the output gets trusted.
 
@@ -48,7 +49,11 @@ When a value genuinely can't be derived or sourced yet, don't bury it in an expr
 
 If a test fails and the fix on the table is "adjust the constant / widen the tolerance," stop. Either the code is wrong (fix the code), the test's expectation is wrong (fix it *with a justification that references reality*, not the test run), or the constant truly was wrong (then its replacement needs the same derivation-or-citation as any other number). The test result itself is never evidence for a value.
 
-### 5. Audit sibling numbers
+### 5. Numbers in prose are numbers too
+
+A figure quoted in a README, a doc, or the product's own copy ("handles 10k rps", "error under 2%") is a claim with the same provenance rule. Measure it before writing it, re-measure after any change that could move it, and grep the docs for quoted figures when the code behind them changes. When one turns out wrong, correct it visibly rather than silently — the reader who trusted the old value needs to know.
+
+### 6. Audit sibling numbers
 
 A made-up number rarely travels alone. When you find one, sweep the module for its siblings — the same hand that invented one default invented the others.
 
@@ -71,6 +76,7 @@ Fixes: <each finding → derived / cited / surfaced as assumption / replaced wit
 | Tuned to green | the constant's git history is "make test pass." |
 | Buried assumption | a guess inlined into a formula, indistinguishable from a fact. |
 | Stale citation | a comment citing a source the value no longer matches. A wrong citation is worse than none. |
+| The doc figure from memory | a number written into the README from recollection, never measured, drifting further with every change. |
 | Citation theater | citing a source that doesn't actually contain the number. The skill is provenance, not decoration. |
 
 ## Mental Model

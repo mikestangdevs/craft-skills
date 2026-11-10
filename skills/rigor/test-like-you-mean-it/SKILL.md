@@ -1,6 +1,6 @@
 ---
 name: test-like-you-mean-it
-description: "Use after building any feature, model, or fix that the team has to trust — before calling it done. Replaces smoke tests and tests-written-to-pass with an adversarial test wave: tests designed to BREAK the thing (invariants, conservation laws, edge regimes, reference cross-checks, hostile inputs), where findings are expected and get fixed, not explained away. Use when the agent (or you) just wrote tests alongside the code it's testing, when a suite passes suspiciously fast, when coverage exists but confidence doesn't, or when someone says 'tests pass' and you still wouldn't bet on it in production."
+description: "Use after building a feature, model, or fix that has to be trusted, before calling it done. Replaces smoke tests and tests written to pass with an adversarial wave — invariants, edge regimes, independent cross-checks, hostile inputs — where findings are expected and get fixed. Use when tests were written alongside the code they test, or a green suite still doesn't earn confidence."
 ---
 
 # Test Like You Mean It

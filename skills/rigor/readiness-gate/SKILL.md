@@ -1,6 +1,6 @@
 ---
 name: readiness-gate
-description: "Use at every 'are we ready?' moment — before declaring a task done, shipping, demoing, advancing to the next phase, or answering 'so everything works and we're good?'. Replaces vibes-based confidence ('should work now', 'looks good') with an explicit, evidence-backed go/no-go: what was verified and how, what was NOT verified, what changed, and the honest residual risk. Calibrates certainty to evidence — never asserts '100% sure' beyond what was actually tested, and never truncates the findings to fit a tidy summary. Use when reporting completion of any unit of work, when the user asks for a readiness check against a spec or checklist, or when you catch yourself about to say 'this should work'."
+description: "Use at every 'are we ready?' moment — before declaring done, shipping, demoing, or answering 'so everything works?'. Replaces 'should work now' with an evidence-backed go/no-go: what was verified and how, what was not, the spec walked line by line, and the residual risk. Certainty is calibrated to what was actually tested."
 ---
 
 # Readiness Gate

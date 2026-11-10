@@ -1,6 +1,6 @@
 ---
 name: checkpoint-handoff
-description: "Use before any context boundary — a context compaction, the end of a long session, a handoff to another agent or a future session — on multi-session work. Writes the resume state DOWN, outside the conversation: a working doc with what's done, what's in flight, the numbered remaining tasks in order, the standing constraints (the rules that must survive verbatim), and the files worth re-reading first. The test: a cold session with zero conversational memory could pick up the next task without asking a single question. Use when the user says they're about to compact, when context is getting long mid-project, when pausing a phased effort, or when work will continue 'tomorrow' (it never continues in the same window)."
+description: "Use before a context boundary on multi-session work — a compaction, the end of a long session, a handoff to another agent. Writes the resume state to a durable file: what's done, what's in flight, the ordered remaining tasks, the standing constraints verbatim, and the files to re-read first, so a cold session can continue without asking."
 ---
 
 # Checkpoint Handoff

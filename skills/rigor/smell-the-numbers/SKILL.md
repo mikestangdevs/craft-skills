@@ -1,6 +1,6 @@
 ---
 name: smell-the-numbers
-description: "Use whenever code produces an output someone will read — a report, a metric, a chart, a calculation result, a dashboard value — and especially when a result is surprising, suspiciously clean, or just changed a lot. Treats every implausible number as guilty until root-caused: all-zeros, -0, a value at 1858% of its physical limit, a metric that moved 40x from one run to the next, a flagship case that suddenly fails, an output that's perfectly smooth where reality is noisy. The bug is found and explained — never cosmetically hidden, clamped, or filtered out of the display. Use when reviewing simulation/analytics output, after a big refactor changes results, or when something 'works' but the numbers feel wrong."
+description: "Use when code produces output someone will read — a report, metric, chart, or calculation — and a result is surprising, suspiciously clean, or just changed a lot. Implausible values (all zeros, a value past its physical limit, a metric that moved 40x) are root-caused at the source, never clamped, hidden, or smoothed in the display."
 ---
 
 # Smell the Numbers

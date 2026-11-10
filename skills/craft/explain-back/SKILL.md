@@ -1,6 +1,6 @@
 ---
 name: explain-back
-description: "Use before trusting, merging, or building on top of code you (or an agent) just wrote or are about to change. The agent explains the code back in plain language — what it does, why it exists, what breaks if it's wrong — and refuses to proceed until the mental model is confirmed. Use when a diff looks fine but nobody actually understands it, when reviewing AI-generated code, when onboarding to an unfamiliar file, or when you catch yourself about to approve something you can't explain."
+description: "Use before trusting, merging, or building on code that was just written or is about to change. The agent explains it back in plain language — what it does, why it exists, what breaks if it's wrong — and doesn't proceed until the mental model is confirmed. Use on AI-generated diffs that look fine but nobody can explain, and before changing an unfamiliar file."
 ---
 
 # Explain Back

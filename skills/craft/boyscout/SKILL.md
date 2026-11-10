@@ -1,6 +1,6 @@
 ---
 name: boyscout
-description: "Use when touching an existing file to make a change, so you leave it slightly cleaner than you found it without derailing into a giant refactor. Identifies small, safe, in-scope improvements adjacent to the change you're already making — a better name, a deleted dead line, an extracted helper, a clarified condition — and keeps them separate from the behavior change so review stays clean. Use on every non-trivial edit to an existing file; the discipline is keeping cleanup small and bounded, not skipping it."
+description: "Use when editing an existing file, to leave it slightly cleaner without derailing into a refactor. Picks small, safe, in-scope improvements next to the change — a better name, a deleted dead line, a clarified condition — and keeps them separate from the behavior change so review stays clean."
 ---
 
 # Boy Scout
@@ -49,7 +49,7 @@ A qualifying cleanup may borrow a sibling skill at small scale — a better name
 
 ### 5. Park the big stuff
 
-Anything that failed the cheapness test goes into a short "deferred" list — a TODO, an issue, or a note to the human — so it's captured without derailing the current change.
+Anything that failed the cheapness test goes into a short "deferred" list — a TODO, an issue, or a note to the human — so it's captured without derailing the current change. This list is for cleanup only: a confirmed bug you tripped over is not a deferral candidate, it goes to `fix-it-now`.
 
 ## Output format
 

@@ -1,6 +1,6 @@
 ---
 name: why-comments
-description: "Use when a file is littered with comments that narrate what the code already says (`// increment the counter`), when load-bearing code has no explanation of why it exists, or when reviewing AI-generated code (agents pad output with narration and never record the why). Deletes comments that restate the code, keeps and sharpens the ones that capture a non-obvious why — the workaround, the spec quirk, the ordering constraint — and adds a why where surprising code has none. Use when you hit a line that makes you ask 'why on earth is this here?' and the comment above it just says what it does."
+description: "Use when comments narrate what the code already says (`// increment the counter`) or when surprising, load-bearing code has no explanation. Deletes the narration, keeps and sharpens comments that record a non-obvious why — the workaround, the spec quirk, the ordering constraint — and adds a why where one is missing."
 ---
 
 # Why Comments
